@@ -4,15 +4,15 @@ export interface APNConfig {
   apn_name?: string;
   apn: string;
   proxy?: string;
-  port?: string;
+  port?: string | number;
   username?: string;
   password?: string;
   server?: string;
   mmsc?: string;
   mms_proxy?: string;
-  mms_port?: string;
-  mcc: string;
-  mnc: string;
+  mms_port?: string | number;
+  mcc?: string | number;
+  mnc?: string | number;
   auth_type?: string;
   apn_type?: string;
   apn_protocol?: string;
@@ -25,39 +25,87 @@ export interface APNConfig {
 export const carrierData: Record<string, APNConfig[]> = {
   "United States": [
     {
-      name: "Verizon",
-      apn_name: "Verizon Internet",
-      apn: "vzwinternet",
-      mcc: "310",
-      mnc: "012",
-      apn_type: "default,mms,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      bearer: "Unspecified",
-    },
-    {
-      name: "AT&T",
-      apn_name: "AT&T Broadband",
-      apn: "broadband",
-      mcc: "310",
-      mnc: "410",
-      apn_type: "default,mms,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      bearer: "Unspecified",
-    },
-    {
       name: "T-Mobile",
       apn_name: "T-Mobile US",
       apn: "fast.t-mobile.com",
-      mcc: "310",
-      mnc: "260",
+      mcc: 310,
+      mnc: 260,
       apn_type: "default,mms,supl",
-      apn_protocol: "IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://mms.msg.eng.t-mobile.com/mms/wapenc",
-      bearer: "Unspecified",
+      apn_protocol: "IPv4/IPv6",
+      apn_roaming_protocol: "IPv4/IPv6"
     },
+    {
+      name: "Verizon",
+      apn_name: "Verizon",
+      apn: "vzwinternet",
+      mcc: 311,
+      mnc: 480,
+      apn_type: "default,mms,supl",
+      apn_protocol: "IPv4/IPv6"
+    },
+    {
+      name: "AT&T",
+      apn_name: "AT&T",
+      apn: "phone",
+      mcc: 310,
+      mnc: 410,
+      apn_type: "default,mms,supl",
+      mmsc: "http://mmsc.mobile.att.net",
+      mms_proxy: "proxy.mobile.att.net",
+      mms_port: 80
+    }
+  ],
+  "Japan": [
+    {
+      name: "NTT Docomo",
+      apn_name: "docomo",
+      apn: "spmode.ne.jp",
+      username: "sp@docomo.ne.jp",
+      password: "sp",
+      mcc: 440,
+      mnc: 10,
+      auth_type: "PAP or CHAP",
+      apn_type: "default,supl,mms"
+    },
+    {
+      name: "SoftBank",
+      apn_name: "SoftBank",
+      apn: "plus.4g",
+      username: "plus",
+      password: "4g",
+      mcc: 440,
+      mnc: 20,
+      apn_type: "default,mms,supl"
+    },
+    {
+      name: "au",
+      apn_name: "au",
+      apn: "au.au-net.ne.jp",
+      username: "au@au-net.ne.jp",
+      password: "au",
+      mcc: 440,
+      mnc: 50,
+      apn_type: "default,mms,supl"
+    }
+  ],
+  "Rwanda": [
+    {
+      name: "MTN Rwanda",
+      apn_name: "MTN",
+      apn: "internet",
+      mcc: 635,
+      mnc: 10,
+      apn_type: "default,supl,mms",
+      apn_protocol: "IPv4"
+    },
+    {
+      name: "Airtel Rwanda",
+      apn_name: "Airtel",
+      apn: "internet",
+      mcc: 635,
+      mnc: 14,
+      apn_type: "default,supl,mms"
+    }
   ],
   "United Kingdom": [
     {
@@ -66,140 +114,137 @@ export const carrierData: Record<string, APNConfig[]> = {
       apn: "everywhere",
       username: "eesecure",
       password: "secure",
-      mcc: "234",
-      mnc: "30",
-      apn_type: "default,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://mms/",
-      mms_proxy: "149.254.201.135",
-      mms_port: "8080",
-      bearer: "Unspecified",
+      mcc: 234,
+      mnc: 30,
+      apn_type: "default,supl,mms"
     },
     {
-      name: "O2",
-      apn_name: "O2 Internet",
-      apn: "mobile.o2.co.uk",
-      username: "faster",
-      password: "web",
-      mcc: "234",
-      mnc: "02",
-      apn_type: "default,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://mmsc.mms.o2.co.uk:8002",
-      mms_proxy: "82.132.254.1",
-      mms_port: "8080",
-      bearer: "Unspecified",
-    },
-    {
-      name: "Three",
+      name: "Three UK",
       apn_name: "3 Internet",
-      apn: "three.co.uk",
-      mcc: "234",
-      mnc: "20",
-      apn_type: "default,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://mms.um.three.co.uk:10021/mmsc",
-      mms_proxy: "mms.three.co.uk",
-      mms_port: "8799",
-      bearer: "Unspecified",
-    },
-  ],
-  "Japan": [
-    {
-      name: "NTT Docomo",
-      apn_name: "Docomo Internet",
-      apn: "spmode.ne.jp",
-      mcc: "440",
-      mnc: "10",
-      apn_type: "default,mms,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      bearer: "Unspecified",
+      apn: "3internet",
+      mcc: 234,
+      mnc: 20,
+      apn_type: "default,supl,mms"
     },
     {
-      name: "SoftBank",
-      apn_name: "SoftBank Internet",
-      apn: "plus.4g",
-      mcc: "440",
-      mnc: "20",
-      apn_type: "default,mms,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      bearer: "Unspecified",
-    },
-    {
-      name: "au (KDDI)",
-      apn_name: "au Internet",
-      apn: "au.au-net.ne.jp",
-      mcc: "440",
-      mnc: "50",
-      apn_type: "default,mms,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      bearer: "Unspecified",
-    },
+      name: "Vodafone UK",
+      apn_name: "Vodafone Internet",
+      apn: "internet",
+      username: "web",
+      password: "web",
+      mcc: 234,
+      mnc: 15,
+      apn_type: "default,supl,mms"
+    }
   ],
   "Germany": [
     {
-      name: "Deutsche Telekom",
-      apn_name: "T-Mobile Internet",
-      apn: "internet.t-mobile",
-      username: "t-mobile",
-      password: "tm",
-      mcc: "262",
-      mnc: "01",
-      apn_type: "default,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://mms.t-mobile.de/servlets/mms",
-      mms_proxy: "172.28.23.131",
-      mms_port: "8008",
-      bearer: "Unspecified",
+      name: "Telekom",
+      apn_name: "Telekom Internet",
+      apn: "internet.telekom",
+      username: "telekom",
+      password: "telekom",
+      mcc: 262,
+      mnc: 1,
+      apn_type: "default,supl,mms"
     },
     {
-      name: "Vodafone",
+      name: "Vodafone DE",
       apn_name: "Vodafone Internet",
       apn: "web.vodafone.de",
-      mcc: "262",
-      mnc: "02",
-      apn_type: "default,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://139.7.24.1/servlets/mms",
-      mms_proxy: "139.7.29.17",
-      mms_port: "80",
-      bearer: "Unspecified",
+      mcc: 262,
+      mnc: 2,
+      apn_type: "default,supl,mms"
+    }
+  ],
+  "France": [
+    {
+      name: "Orange France",
+      apn_name: "Orange Internet",
+      apn: "orange",
+      mcc: 208,
+      mnc: 1,
+      apn_type: "default,supl,mms"
     },
+    {
+      name: "SFR",
+      apn_name: "SFR Internet",
+      apn: "websfr",
+      mcc: 208,
+      mnc: 10,
+      apn_type: "default,supl,mms"
+    }
   ],
   "Canada": [
     {
       name: "Rogers",
       apn_name: "Rogers Internet",
       apn: "internet.com",
-      mcc: "302",
-      mnc: "720",
-      apn_type: "default,mms,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://mms.gprs.rogers.com",
-      mms_proxy: "mmsproxy.rogers.com",
-      mms_port: "80",
-      bearer: "Unspecified",
+      mcc: 302,
+      mnc: 720,
+      apn_type: "default,supl,mms"
     },
     {
       name: "Bell",
       apn_name: "Bell Internet",
       apn: "inet.bell.ca",
-      mcc: "302",
-      mnc: "610",
-      apn_type: "default,mms,supl",
-      apn_protocol: "IPv4/IPv6",
-      apn_roaming_protocol: "IPv4",
-      mmsc: "http://mms.bell.ca/mms/wapenc",
-      bearer: "Unspecified",
-    },
+      mcc: 302,
+      mnc: 610,
+      apn_type: "default,supl,mms"
+    }
   ],
+  "Australia": [
+    {
+      name: "Telstra",
+      apn_name: "Telstra Internet",
+      apn: "telstra.internet",
+      mcc: 505,
+      mnc: 1,
+      apn_type: "default,supl,mms"
+    },
+    {
+      name: "Optus",
+      apn_name: "Optus Internet",
+      apn: "internet",
+      mcc: 505,
+      mnc: 2,
+      apn_type: "default,supl,mms"
+    }
+  ],
+  "India": [
+    {
+      name: "Airtel India",
+      apn_name: "Airtel",
+      apn: "airtelgprs.com",
+      mcc: 404,
+      mnc: 10,
+      apn_type: "default,supl,mms"
+    },
+    {
+      name: "Jio",
+      apn_name: "Jio 4G",
+      apn: "jionet",
+      mcc: 405,
+      mnc: 857,
+      apn_type: "default,supl,mms"
+    }
+  ],
+  "South Africa": [
+    {
+      name: "MTN SA",
+      apn_name: "MTN",
+      apn: "internet",
+      mcc: 655,
+      mnc: 10,
+      apn_type: "default,supl,mms"
+    },
+    {
+      name: "Vodacom",
+      apn_name: "Vodacom",
+      apn: "internet",
+      mcc: 655,
+      mnc: 1,
+      apn_type: "default,supl,mms"
+    }
+  ]
 };

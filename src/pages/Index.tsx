@@ -1,13 +1,13 @@
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Copy, Check, Grid, List } from "lucide-react";
+import { Grid, List, Github, Smartphone, Globe, Copy } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { carrierData } from "@/data/carrierData";
 import { APNField } from "@/components/APNField";
+import { CountrySelector } from "@/components/CountrySelector";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
@@ -16,7 +16,7 @@ const Index = () => {
   const [isGridLayout, setIsGridLayout] = useState(true);
   const { toast } = useToast();
 
-  const countries = Object.keys(carrierData);
+  const countries = Object.keys(carrierData).sort();
   const carriers = selectedCountry ? carrierData[selectedCountry] || [] : [];
   const currentAPN = selectedCarrier ? carriers.find(c => c.name === selectedCarrier) : null;
 
@@ -36,45 +36,71 @@ const Index = () => {
     }
   };
 
+  const handleCountryChange = (country: string) => {
+    setSelectedCountry(country);
+    setSelectedCarrier(""); // Reset carrier when country changes
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6 max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="container mx-auto px-4 py-6 max-w-5xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">APN Lookup Tool</h1>
-          <p className="text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Smartphone className="w-8 h-8 text-blue-600" />
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              APN Lookup Tool
+            </h1>
+          </div>
+          <p className="text-gray-600 text-lg">
             Configure mobile data settings for your device manually
           </p>
+          <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">
+            <Globe className="w-4 h-4" />
+            <span>Perfect for imported phones, travelers, and network troubleshooting</span>
+          </div>
+        </div>
+
+        {/* GitHub Contributor Link */}
+        <div className="mb-6 text-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.open("https://github.com", "_blank")}
+            className="gap-2 hover:bg-gray-50"
+          >
+            <Github className="w-4 h-4" />
+            Missing your carrier? Contribute on GitHub
+          </Button>
         </div>
 
         {/* Country Selection */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Select Your Country</CardTitle>
+        <Card className="mb-6 shadow-lg border-0 bg-white/70 backdrop-blur-sm">
+          <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-t-lg">
+            <CardTitle className="flex items-center gap-2">
+              <Globe className="w-5 h-5" />
+              Select Your Country
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose your country..." />
-              </SelectTrigger>
-              <SelectContent>
-                {countries.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <CardContent className="p-6">
+            <CountrySelector
+              countries={countries}
+              value={selectedCountry}
+              onValueChange={handleCountryChange}
+            />
           </CardContent>
         </Card>
 
         {/* Carrier Selection */}
         {selectedCountry && (
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Select Your Mobile Carrier</CardTitle>
+          <Card className="mb-6 shadow-lg border-0 bg-white/70 backdrop-blur-sm">
+            <CardHeader className="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <Smartphone className="w-5 h-5" />
+                Select Your Mobile Carrier
+              </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-6">
               <Select value={selectedCarrier} onValueChange={setSelectedCarrier}>
                 <SelectTrigger>
                   <SelectValue placeholder="Choose your carrier..." />
@@ -93,23 +119,30 @@ const Index = () => {
 
         {/* APN Configuration Display */}
         {currentAPN && (
-          <Card className="mb-6">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>APN Configuration - {currentAPN.name}</CardTitle>
+          <Card className="mb-6 shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+            <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-t-lg">
+              <CardTitle className="flex items-center gap-2">
+                <Copy className="w-5 h-5" />
+                APN Configuration - {currentAPN.name}
+              </CardTitle>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                   onClick={() => setIsGridLayout(!isGridLayout)}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white border-white/30"
                 >
                   {isGridLayout ? <List className="w-4 h-4" /> : <Grid className="w-4 h-4" />}
                   {isGridLayout ? "List View" : "Grid View"}
                 </Button>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className={`gap-4 ${isGridLayout ? "grid grid-cols-1 md:grid-cols-2" : "space-y-4"}`}>
+            <CardContent className="p-6">
+              <div className={
+                isGridLayout 
+                  ? "grid grid-cols-1 md:grid-cols-2 gap-4" 
+                  : "max-h-96 overflow-y-auto space-y-3 pr-2"
+              }>
                 <APNField label="Name" value={currentAPN.apn_name} onCopy={handleCopy} />
                 <APNField label="APN" value={currentAPN.apn} onCopy={handleCopy} />
                 <APNField label="Proxy" value={currentAPN.proxy} onCopy={handleCopy} />
@@ -127,7 +160,7 @@ const Index = () => {
                 <APNField label="APN protocol" value={currentAPN.apn_protocol} onCopy={handleCopy} />
                 <APNField label="APN roaming protocol" value={currentAPN.apn_roaming_protocol} onCopy={handleCopy} />
                 <APNField label="APN enable/disable" value="APN enabled" onCopy={handleCopy} />
-                <APNField label="Bearer" value={currentAPN.bearer} onCopy={handleCopy} />
+                <APNField label="Bearer" value={currentAPN.bearer || "Unspecified"} onCopy={handleCopy} />
                 <APNField label="MVNO type" value={currentAPN.mvno_type} onCopy={handleCopy} />
                 <APNField label="MVNO value" value={currentAPN.mvno_value} onCopy={handleCopy} />
               </div>
@@ -137,10 +170,13 @@ const Index = () => {
 
         {/* Help Text */}
         {!currentAPN && (
-          <Card className="mb-6">
+          <Card className="mb-6 border-2 border-dashed border-gray-300 bg-gray-50/50">
             <CardContent className="pt-6">
-              <div className="text-center text-muted-foreground">
-                <p className="mb-2">Select your country and carrier to view APN settings</p>
+              <div className="text-center text-gray-600">
+                <div className="mb-4">
+                  <Smartphone className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                </div>
+                <p className="mb-2 text-lg font-medium">Select your country and carrier to view APN settings</p>
                 <p className="text-sm">
                   This tool is especially helpful for imported smartphones, travelers, or users with network configuration issues.
                 </p>
