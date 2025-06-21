@@ -36,7 +36,7 @@ Additional details:
 
 Thank you for helping improve the APN Lookup Tool!`);
 
-    const mailtoLink = `mailto:shemacharmant@gmail.com?subject=${subject}&body=${body}`;
+    const mailtoLink = `mailto:charmantshema112@gmail.com?subject=${subject}&body=${body}`;
     window.open(mailtoLink, '_blank');
 
     setTimeout(() => {
