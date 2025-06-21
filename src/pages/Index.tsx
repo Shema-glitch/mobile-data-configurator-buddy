@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Grid, List, Github, Smartphone, Globe, Copy } from "lucide-react";
+import { Grid, List, Github, Smartphone, Globe, Copy, Star } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { carrierData } from "@/data/carrierData";
 import { APNField } from "@/components/APNField";
@@ -42,6 +42,14 @@ const Index = () => {
     setSelectedCarrier(""); // Reset carrier when country changes
   };
 
+  const handleStarRepo = () => {
+    window.open("https://github.com/Shema-glitch/mobile-data-configurator-buddy", "_blank");
+  };
+
+  const handleContribute = () => {
+    window.open("https://github.com/Shema-glitch/mobile-data-configurator-buddy", "_blank");
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-6 max-w-5xl">
@@ -64,17 +72,29 @@ const Index = () => {
           </div>
         </div>
 
-        {/* GitHub Contributor Link */}
-        <div className="mb-6 text-center">
+        {/* GitHub Actions */}
+        <div className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => window.open("https://github.com/Shema-glitch/mobile-data-configurator-buddy", "_blank")}
+            onClick={handleStarRepo}
+            className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-100"
+          >
+            <Star className="w-4 h-4" />
+            Star Repository
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleContribute}
             className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-100"
           >
             <Github className="w-4 h-4" />
             Missing your carrier? Contribute on GitHub
           </Button>
+          <div className="w-full sm:w-auto">
+            <ReportIssue country={selectedCountry} carrier={selectedCarrier} />
+          </div>
         </div>
 
         {/* Country Selection */}
@@ -118,13 +138,6 @@ const Index = () => {
               </Select>
             </CardContent>
           </Card>
-        )}
-
-        {/* Report Issue Card */}
-        {selectedCountry && (
-          <div className="mb-6">
-            <ReportIssue country={selectedCountry} carrier={selectedCarrier} />
-          </div>
         )}
 
         {/* APN Configuration Display */}
