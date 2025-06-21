@@ -24,13 +24,13 @@ export const APNField = ({ label, value, onCopy }: APNFieldProps) => {
   };
 
   return (
-    <div className="flex items-center justify-between p-4 border rounded-xl bg-gradient-to-r from-white to-gray-50 hover:from-blue-50 hover:to-purple-50 transition-all duration-200 shadow-sm hover:shadow-md">
+    <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg bg-white hover:bg-gray-50 transition-colors">
       <div className="flex-1 min-w-0">
         <div className="text-sm font-semibold text-gray-700 mb-1">{label}</div>
         <div className={`text-sm truncate ${
           isNotSet 
             ? "text-gray-400 italic" 
-            : "text-gray-900 font-mono bg-gray-100 px-2 py-1 rounded"
+            : "text-gray-900 font-mono bg-gray-100 px-2 py-1 rounded text-xs"
         }`}>
           {displayValue}
         </div>
@@ -40,12 +40,12 @@ export const APNField = ({ label, value, onCopy }: APNFieldProps) => {
         size="sm"
         onClick={handleCopy}
         disabled={isNotSet || copied}
-        className={`ml-3 flex items-center gap-2 transition-all duration-200 ${
+        className={`ml-3 flex items-center gap-2 transition-all ${
           copied 
-            ? "bg-green-500 text-white border-green-500" 
+            ? "bg-green-600 text-white border-green-600 hover:bg-green-600" 
             : isNotSet 
               ? "opacity-50" 
-              : "hover:bg-blue-500 hover:text-white hover:border-blue-500"
+              : "border-gray-300 text-gray-700 hover:bg-gray-100"
         }`}
       >
         {copied ? (

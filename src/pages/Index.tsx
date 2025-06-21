@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { carrierData } from "@/data/carrierData";
 import { APNField } from "@/components/APNField";
 import { CountrySelector } from "@/components/CountrySelector";
+import { ReportIssue } from "@/components/ReportIssue";
 import { Footer } from "@/components/Footer";
 
 const Index = () => {
@@ -42,20 +43,22 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-6 max-w-5xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Smartphone className="w-8 h-8 text-blue-600" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <Smartphone className="w-8 h-8 text-blue-600" />
+            </div>
+            <h1 className="text-4xl font-bold text-gray-900">
               APN Lookup Tool
             </h1>
           </div>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-lg mb-4">
             Configure mobile data settings for your device manually
           </p>
-          <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">
+          <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
             <Globe className="w-4 h-4" />
             <span>Perfect for imported phones, travelers, and network troubleshooting</span>
           </div>
@@ -67,7 +70,7 @@ const Index = () => {
             variant="outline"
             size="sm"
             onClick={() => window.open("https://github.com", "_blank")}
-            className="gap-2 hover:bg-gray-50"
+            className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-100"
           >
             <Github className="w-4 h-4" />
             Missing your carrier? Contribute on GitHub
@@ -75,8 +78,8 @@ const Index = () => {
         </div>
 
         {/* Country Selection */}
-        <Card className="mb-6 shadow-lg border-0 bg-white/70 backdrop-blur-sm">
-          <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-t-lg">
+        <Card className="mb-6 shadow-sm border border-gray-200 bg-white">
+          <CardHeader className="bg-gray-900 text-white">
             <CardTitle className="flex items-center gap-2">
               <Globe className="w-5 h-5" />
               Select Your Country
@@ -93,8 +96,8 @@ const Index = () => {
 
         {/* Carrier Selection */}
         {selectedCountry && (
-          <Card className="mb-6 shadow-lg border-0 bg-white/70 backdrop-blur-sm">
-            <CardHeader className="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-t-lg">
+          <Card className="mb-6 shadow-sm border border-gray-200 bg-white">
+            <CardHeader className="bg-blue-600 text-white">
               <CardTitle className="flex items-center gap-2">
                 <Smartphone className="w-5 h-5" />
                 Select Your Mobile Carrier
@@ -117,10 +120,17 @@ const Index = () => {
           </Card>
         )}
 
+        {/* Report Issue Card */}
+        {selectedCountry && (
+          <div className="mb-6">
+            <ReportIssue country={selectedCountry} carrier={selectedCarrier} />
+          </div>
+        )}
+
         {/* APN Configuration Display */}
         {currentAPN && (
-          <Card className="mb-6 shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-t-lg">
+          <Card className="mb-6 shadow-sm border border-gray-200 bg-white">
+            <CardHeader className="flex flex-row items-center justify-between bg-green-600 text-white">
               <CardTitle className="flex items-center gap-2">
                 <Copy className="w-5 h-5" />
                 APN Configuration - {currentAPN.name}
@@ -170,11 +180,13 @@ const Index = () => {
 
         {/* Help Text */}
         {!currentAPN && (
-          <Card className="mb-6 border-2 border-dashed border-gray-300 bg-gray-50/50">
+          <Card className="mb-6 border-2 border-dashed border-gray-300 bg-white">
             <CardContent className="pt-6">
               <div className="text-center text-gray-600">
                 <div className="mb-4">
-                  <Smartphone className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                  <div className="p-3 bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <Smartphone className="w-8 h-8 text-gray-400" />
+                  </div>
                 </div>
                 <p className="mb-2 text-lg font-medium">Select your country and carrier to view APN settings</p>
                 <p className="text-sm">
