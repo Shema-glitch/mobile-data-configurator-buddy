@@ -73,7 +73,7 @@ const Index = () => {
         </div>
 
         {/* GitHub Actions */}
-        <div className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+{/*         <div className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Button
             variant="outline"
             size="sm"
@@ -95,7 +95,7 @@ const Index = () => {
           <div className="w-full sm:w-auto">
             <ReportIssue country={selectedCountry} carrier={selectedCarrier} />
           </div>
-        </div>
+        </div> */}
 
         {/* Country Selection */}
         <Card className="mb-6 shadow-sm border border-gray-200 bg-white">
