@@ -69,7 +69,7 @@ const Index = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => window.open("https://github.com", "_blank")}
+            onClick={() => window.open("https://github.com/Shema-glitch/mobile-data-configurator-buddy", "_blank")}
             className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-100"
           >
             <Github className="w-4 h-4" />
