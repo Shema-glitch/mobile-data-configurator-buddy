@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Grid, List, Github, Smartphone, Globe, Copy, Star } from "lucide-react";
+import { Grid, List, Github, Smartphone, Globe, Copy, Star, AlertTriangle, AlertOctagonIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { carrierData } from "@/data/carrierData";
 import { APNField } from "@/components/APNField";
@@ -57,7 +57,8 @@ const Index = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="p-2 bg-blue-100 rounded-lg">
-              <Smartphone className="w-8 h-8 text-blue-600" />
+              {/* <Smartphone className="w-8 h-8 text-blue-600" /> */}
+              <img src="images/logo.png" alt="Logo" className="w-12 h-12" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900">
               APN Lookup Tool
@@ -67,35 +68,59 @@ const Index = () => {
             Configure mobile data settings for your device manually
           </p>
           <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-            <Globe className="w-4 h-4" />
             <span>Perfect for imported phones, travelers, and network troubleshooting</span>
           </div>
         </div>
 
-        {/* GitHub Actions */}
-{/*         <div className="mb-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleStarRepo}
-            className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-100"
-          >
-            <Star className="w-4 h-4" />
-            Star Repository
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleContribute}
-            className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-100"
-          >
-            <Github className="w-4 h-4" />
-            Missing your carrier? Contribute on GitHub
-          </Button>
-          <div className="w-full sm:w-auto">
-            <ReportIssue country={selectedCountry} carrier={selectedCarrier} />
-          </div>
-        </div> */}
+        {/* GitHub Actions */}     {/* Contribution Section */}
+        {/* Contribution Section */}
+        <Card className="mb-6 border border-gray-200 bg-white shadow-sm">
+          <CardHeader className="bg-gray-100 py-3 px-4">
+            <CardTitle className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+              <Globe className="w-4 h-4" />
+              Improve This Tool
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pt-3 pb-4">
+            <div className="flex flex-row flex-wrap gap-3 justify-between">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleStarRepo}
+                className="flex-1 min-w-[90px] sm:min-w-[140px] gap-2 border-gray-300 text-gray-700 hover:bg-gray-100 justify-center"
+              >
+                <Star className="w-5 h-5 text-yellow-500" />
+                <span className="hidden sm:inline">Star Repo</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleContribute}
+                className="flex-1 min-w-[90px] sm:min-w-[140px] gap-2 border-gray-300 text-gray-700 hover:bg-gray-100 justify-center"
+              >
+                <Github className="w-5 h-5" />
+                <span className="hidden sm:inline">Add Carrier Info</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1 min-w-[90px] sm:min-w-[140px] gap-2 border-gray-300 text-gray-700 hover:bg-gray-100 justify-center"
+                onClick={() =>
+                  window.open(
+                    `https://github.com/Shema-glitch/mobile-data-configurator-buddy/issues/new?title=Missing+or+incorrect+APN+for+${selectedCarrier || 'Carrier'}`,
+                    "_blank"
+                  )
+                }
+              >
+                <AlertOctagonIcon className="w-5 h-5 text-red-500" />
+                <span className="hidden sm:inline">Report Issue</span>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+
+
 
         {/* Country Selection */}
         <Card className="mb-6 shadow-sm border border-gray-200 bg-white">
@@ -162,8 +187,8 @@ const Index = () => {
             </CardHeader>
             <CardContent className="p-6">
               <div className={
-                isGridLayout 
-                  ? "grid grid-cols-1 md:grid-cols-2 gap-4" 
+                isGridLayout
+                  ? "grid grid-cols-1 md:grid-cols-2 gap-4"
                   : "max-h-96 overflow-y-auto space-y-3 pr-2"
               }>
                 <APNField label="Name" value={currentAPN.apn_name} onCopy={handleCopy} />
@@ -210,7 +235,7 @@ const Index = () => {
           </Card>
         )}
       </div>
-      
+
       <Footer />
     </div>
   );
